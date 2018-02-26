@@ -1,0 +1,31 @@
+vDelta=0;
+hDelta=0;
+hSize=3;
+vSize=3;
+deskPos=$(xdotool get_desktop)
+hPos=$(( deskPos%vSize ))
+vPos=$(( deskPos/vSize ))
+echo $deskPos $hPos $vPos;
+
+
+while [ $# -gt 0 ]
+do 
+case $1 in
+	-hv) 
+		hDelta=$2; 
+		echo "hDelta: ${hDelta}";
+		shift; shift;
+		hPos=$(( (hPos+hDelta+hSize)%hSize ));
+	;;
+	-vv) 
+		vDelta=$2; 
+		echo "vDelta: ${vDelta}";
+		shift; shift;
+		vPos=$(( (vPos+vDelta+vSize)%vSize ));
+	;;
+	*) shift;
+	;;
+esac
+done
+echo "new h:" $hPos "new v:" $vPos "new Pos:" $(( (vPos*hSize) + hPos ));
+xdotool set_desktop $(( (vPos*hSize) + hPos ))
