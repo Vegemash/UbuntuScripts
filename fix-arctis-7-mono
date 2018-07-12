@@ -1,0 +1,3 @@
+# the 2 is the number of the sound card, obtained by 'aplay -l'
+
+pacmd load-module module-alsa-sink device=hw:2,1
